@@ -2,21 +2,23 @@
 
 import fileinput
 
-first = True
-last = 0
+MEASUREMENTS = 3
+
+last = []
 increases = 0
 
 for line in fileinput.input():
     number = int(line)
 
-    if first:
-        last = number
-        first = False
+    if len(last) < MEASUREMENTS:
+        last.append(number)
         continue
 
-    diff = number - last
+    nextt = last[1:]
+    nextt.append(number)
+    diff = sum(nextt) - sum(last)
     if (diff > 0):
         increases = increases + 1
-    last = number
+    last = nextt
 
 print(increases)
