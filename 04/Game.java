@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.stream.Collectors;
 
 public class Game {
 
     private final Queue<Integer> numbers;
-    private final List<Board> boards;
+    private List<Board> boards;
 
     public Game() {
         this.numbers = new LinkedList<>();
@@ -47,7 +48,6 @@ public class Game {
         }
     }
 
-
     public int getWinningScore() {
         while (!this.numbers.isEmpty()) {
             int number = this.numbers.remove();
@@ -58,6 +58,32 @@ public class Game {
                     return b.getScore(number);
                 }
             }
+        }
+
+        return -1;
+    }
+
+    public int getLastWinningScore() {
+        while (!this.numbers.isEmpty()) {
+            int number = this.numbers.remove();
+
+            int wonBoards = 0;
+            for (Board b : this.boards) {
+                b.mark(number);
+
+                if (b.hasWon()) {
+                    wonBoards = wonBoards + 1;
+                }
+
+                //check if last board has won
+                if (wonBoards == this.boards.size()) {
+                    return b.getScore(number);
+                }
+            }
+
+            //remove boards that have won
+            this.boards = this.boards.stream().filter((Board b) -> !b.hasWon())
+                    .collect(Collectors.toList());
         }
 
         return -1;
