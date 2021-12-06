@@ -8,5 +8,7 @@ public class Main {
 
         game.readNumbers(br);
         game.readBoards(br);
+
+        System.out.println(game.getWinningScore());
     }
 }

@@ -1,15 +1,17 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Game {
 
-    private final List<Integer> numbers;
+    private final Queue<Integer> numbers;
     private final List<Board> boards;
 
     public Game() {
-        this.numbers = new ArrayList<>();
+        this.numbers = new LinkedList<>();
         this.boards = new ArrayList<>();
     }
 
@@ -43,7 +45,21 @@ public class Game {
                 break;
             }
         }
+    }
 
-        System.out.println(this.boards);
+
+    public int getWinningScore() {
+        while (!this.numbers.isEmpty()) {
+            int number = this.numbers.remove();
+
+            for (Board b : this.boards) {
+                b.mark(number);
+                if (b.hasWon()) {
+                    return b.getScore(number);
+                }
+            }
+        }
+
+        return -1;
     }
 }
