@@ -1,3 +1,8 @@
+/**
+Advent of Code 2021 Day 3 Part 1
+Solution
+*/
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -56,7 +61,6 @@ int gamma(int* counts, int countsc) {
 
     return result;
 }
-
 
 int epsilon(int* counts, int countsc) {
     int mask = 1 << countsc;
