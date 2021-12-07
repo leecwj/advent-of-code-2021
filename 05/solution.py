@@ -1,6 +1,12 @@
 #!/usr/bin/env python
+"""
+Advent of Code 2021 Day 5 Part 1&2
+Solution
+"""
 
 import fileinput
+
+MODE = 2
 
 
 class Line(object):
@@ -38,6 +44,19 @@ class Lines(object):
             x = line.p1[0]
             for i in range(y1, y2+1):
                 self.increment_point((x, i))
+        else:
+            if MODE != 2:
+                return
+
+            x_dir = 1 if line.p2[0] > line.p1[0] else -1
+            y_dir = 1 if line.p2[1] > line.p1[1] else -1
+
+            x1 = line.p1[0]
+            y1 = line.p1[1]
+            d = abs(line.p2[0] - line.p1[0])
+
+            for i in range(d + 1):
+                self.increment_point((x1 + i * x_dir, y1 + i * y_dir))
 
     def intersection_count(self):
         return len([x for x in self._points.values() if x > 1])
